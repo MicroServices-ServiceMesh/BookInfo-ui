@@ -6,13 +6,43 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { RegisterComponent } from './components/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NgModule,
+  CUSTOM_ELEMENTS_SCHEMA,
+  APP_INITIALIZER
+} from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
+import {
+  KeycloakService,
+  KeycloakAuthGuard,
+  KeycloakAngularModule
+} from 'keycloak-angular';
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:9080/auth',
+        realm: 'MicroServices',
+        clientId: 'BookInfo-ui'
+      },
+      initOptions: {
+        onLoad: 'login-required',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      }
+    });
+}
 
 @NgModule({
-  declarations: [AppComponent, LogInComponent, RegisterComponent, BookDetailsComponent],
+  declarations: [
+    AppComponent,
+    LogInComponent,
+    RegisterComponent,
+    BookDetailsComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -20,9 +50,20 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
     AngularMaterialModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    KeycloakAngularModule
   ],
-  providers: [],
+
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    }
+  ],
+
+  /*providers: []*/
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
