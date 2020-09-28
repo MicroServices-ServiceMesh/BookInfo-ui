@@ -25,3 +25,8 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## KeyCloak setting
+
+Set the X-Frame-Options as 'ALLOW-FROM http://10.0.0.15:4200/*'
+Set the Content-Security-Policy as 'frame-ancestors 'self' http://localhost:9080 http://localhost:4200 localhost;'
