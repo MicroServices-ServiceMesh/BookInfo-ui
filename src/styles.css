@@ -107,4 +107,5 @@ body {
 .container {
   margin-top: 10px;
   background-color: purple;
+  /* border: 1px solid white; */
 }

@@ -9,7 +9,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import {
   NgModule,
   CUSTOM_ELEMENTS_SCHEMA,
-  APP_INITIALIZER
+  APP_INITIALIZER,
 } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,8 +17,9 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import {
   KeycloakService,
   KeycloakAuthGuard,
-  KeycloakAngularModule
+  KeycloakAngularModule,
 } from 'keycloak-angular';
+import { BookUpdateComponent } from './components/book-update/book-update.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -26,13 +27,13 @@ function initializeKeycloak(keycloak: KeycloakService) {
       config: {
         url: 'http://localhost:9080/auth',
         realm: 'MicroServices',
-        clientId: 'BookInfo-ui'
+        clientId: 'BookInfo-ui',
       },
       initOptions: {
         onLoad: 'login-required',
         silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html'
-      }
+          window.location.origin + '/assets/silent-check-sso.html',
+      },
     });
 }
 
@@ -41,7 +42,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AppComponent,
     LogInComponent,
     RegisterComponent,
-    BookDetailsComponent
+    BookDetailsComponent,
+    BookUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
   ],
 
   providers: [
@@ -60,12 +62,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
-      deps: [KeycloakService]
-    }
+      deps: [KeycloakService],
+    },
   ],
 
   /*providers: []*/
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
