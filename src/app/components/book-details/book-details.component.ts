@@ -11,16 +11,17 @@ export interface PeriodicElement {
 const ELEMENT_DATA: PeriodicElement[] = [
   { id: '1', firstName: 'Hydrogen', lastName: 'H' },
   { id: '2', firstName: 'Helium', lastName: 'He' },
-  { id: '10', firstName: 'Neon', lastName: 'Ne' }
+  { id: '10', firstName: 'Neon', lastName: 'Ne' },
 ];
 
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
-  styleUrls: ['./book-details.component.css']
+  styleUrls: ['./book-details.component.css'],
 })
 export class BookDetailsComponent implements OnInit {
   dataSource;
+  selectedRowIndex = -1;
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName'];
 
@@ -30,5 +31,9 @@ export class BookDetailsComponent implements OnInit {
     this.studentService.resolveItems().subscribe((data: {}) => {
       this.dataSource = data;
     });
+  }
+
+  highlight(row) {
+    this.selectedRowIndex = row.id;
   }
 }
