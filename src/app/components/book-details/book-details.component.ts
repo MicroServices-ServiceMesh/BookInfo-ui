@@ -35,5 +35,6 @@ export class BookDetailsComponent implements OnInit {
 
   highlight(row) {
     this.selectedRowIndex = row.id;
+    this.studentService.setBookIdForUpdate(this.selectedRowIndex);
   }
 }

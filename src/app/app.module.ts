@@ -20,6 +20,7 @@ import {
   KeycloakAngularModule,
 } from 'keycloak-angular';
 import { BookUpdateComponent } from './components/book-update/book-update.component';
+import { StudentService } from './service/studentapi/student.service';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -64,6 +65,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true,
       deps: [KeycloakService],
     },
+    StudentService,
   ],
 
   /*providers: []*/

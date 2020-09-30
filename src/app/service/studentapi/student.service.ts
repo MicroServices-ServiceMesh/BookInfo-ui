@@ -3,10 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StudentService {
   private readonly URL = 'http://localhost:8080/v1/student/list';
+  private readonly getByBookId = 'http://localhost:8080/v1/student/';
+  bookId: string;
 
   constructor(private http: HttpClient) {}
 
@@ -15,9 +17,18 @@ export class StudentService {
   // every HTTTP call returns Observable object
   resolveItems(): Observable<any> {
     console.log('Request is sent!');
-    // this.http is a HttpClient library provide by @angular/common
-    // we are calling .get() method over this.http object
-    //this .get() method takes URL to call API
     return this.http.get(this.URL);
+  }
+
+  retrieveBookById(bookId): Observable<any> {
+    return this.http.get(this.getByBookId.concat(bookId));
+  }
+
+  public setBookIdForUpdate(bookIdToUpdate) {
+    this.bookId = bookIdToUpdate;
+  }
+
+  public getBookIdForUpdate() {
+    return this.bookId;
   }
 }
