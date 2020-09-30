@@ -28,6 +28,14 @@ export class BookUpdateComponent implements OnInit {
     });
   }
 
+  public createOrUpdateStudent() {
+    this.book = this.form.value;
+    console.log(this.book);
+    this.studentService.createOrUpdateBook(this.book).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
   ngOnInit(): void {
     this.studentServiceSubscription = this.studentService
       .retrieveBookById()
