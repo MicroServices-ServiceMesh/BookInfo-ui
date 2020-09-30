@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { StudentService } from '../../service/studentapi/student.service';
 import { Book } from '../../model/Book';
 import {
@@ -17,6 +18,7 @@ import { from } from 'rxjs';
 export class BookUpdateComponent implements OnInit {
   book: Book = {} as Book;
   form: FormGroup;
+  studentServiceSubscription: Subscription;
 
   constructor(private studentService: StudentService, fb: FormBuilder) {
     this.form = fb.group({
@@ -27,9 +29,15 @@ export class BookUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.studentService.retrieveBookById().subscribe((data) => {
-      this.book = data;
-      this.form.patchValue(this.book);
-    });
+    this.studentServiceSubscription = this.studentService
+      .retrieveBookById()
+      .subscribe((data) => {
+        this.book = data;
+        this.form.patchValue(this.book);
+      });
+  }
+
+  ngOnDestroy() {
+    this.studentServiceSubscription.unsubscribe();
   }
 }

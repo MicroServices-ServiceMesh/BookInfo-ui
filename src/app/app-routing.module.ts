@@ -10,8 +10,18 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'bookDetails' },
   { path: 'login', component: LogInComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'bookDetails', component: BookDetailsComponent },
-  { path: 'updateBook', component: BookUpdateComponent },
+  {
+    path: 'bookDetails',
+    component: BookDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['BookInfo/read', 'BookInfo/update'] },
+  },
+  {
+    path: 'updateBook',
+    component: BookUpdateComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['BookInfo/read', 'BookInfo/update'] },
+  },
 ];
 
 @NgModule({
