@@ -8,8 +8,8 @@ import { Book } from '../../model/Book';
   providedIn: 'root',
 })
 export class StudentService {
-  private readonly URL = 'http://localhost:8080/v1/student/list';
-  private readonly getByBookId = 'http://localhost:8080/v1/student/';
+  private readonly URL = 'http://localhost:8080/api/v1/student/list';
+  private readonly getByBookId = 'http://localhost:8080/api/v1/student/';
   private bookId: string;
 
   httpOptions = {
@@ -30,20 +30,19 @@ export class StudentService {
 
   resolveItems(): Observable<any> {
     console.log('Request is sent!');
-    return this.http.get(this.URL);
+    return this.http.get(this.URL, this.httpOptions);
   }
 
   retrieveBookById(): Observable<any> {
-    return this.http.get(this.getByBookId.concat(this.bookId));
+    return this.http.get(
+      this.getByBookId.concat(this.bookId),
+      this.httpOptions
+    );
   }
 
   createOrUpdateBook(book: Book) {
     if (typeof book.id != 'undefined' && book.id) {
-      return this.http.put(
-        this.getByBookId.concat(book.id),
-        book,
-        this.httpOptions
-      );
+      return this.http.put(this.getByBookId, book, this.httpOptions);
     } else {
       return this.http.post(this.getByBookId, book, this.httpOptions);
     }
