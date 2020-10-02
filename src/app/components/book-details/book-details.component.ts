@@ -1,18 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StudentService } from '../../service/studentapi/student.service';
-
-export interface PeriodicElement {
-  firstName: string;
-  id: string;
-  lastName: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id: '1', firstName: 'Hydrogen', lastName: 'H' },
-  { id: '2', firstName: 'Helium', lastName: 'He' },
-  { id: '10', firstName: 'Neon', lastName: 'Ne' },
-];
+import { Book } from '../../model/Book';
 
 @Component({
   selector: 'app-book-details',
@@ -20,16 +9,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./book-details.component.css'],
 })
 export class BookDetailsComponent implements OnInit {
-  dataSource;
+  dataSource: Book[];
   selectedRowIndex = -1;
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName'];
 
   constructor(private studentService: StudentService) {}
 
+  /*
+   * Retrieve all data on load
+   */
   ngOnInit() {
-    this.studentService.resolveItems().subscribe((data: {}) => {
-      this.dataSource = data;
+    this.studentService.retrieveAllBooks().subscribe((data: {}) => {
+      this.dataSource = data as Book[];
     });
   }
 

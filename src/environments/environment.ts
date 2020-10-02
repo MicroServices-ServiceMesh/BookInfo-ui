@@ -5,9 +5,13 @@ export const environment = {
     realm: 'MicroServices',
     clientId: 'BookInfo-ui',
     credentials: {
-      secret: 'eb873931-3a39-4b7f-9e59-2e81ea7fdd5e'
-    }
-  }
+      secret: 'eb873931-3a39-4b7f-9e59-2e81ea7fdd5e',
+    },
+  },
+  bookServiceEndpoints: {
+    list: 'http://localhost:8080/api/v1/student/list',
+    student: 'http://localhost:8080/api/v1/student/',
+  },
 };
 
 /*
